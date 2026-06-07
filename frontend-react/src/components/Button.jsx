@@ -1,11 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Button = (props) => {
+  const handleClick = (e) => {
+    if (props.onClick) {
+      e.preventDefault();
+      props.onClick();
+    }
+  }
+
   return (
     <>
-        <a className={`btn ${props.class}`} href="">
+        <Link className={`btn ${props.class}`} to={props.url} onClick={handleClick}>
           {props.text}
-        </a> 
+        </Link> 
     </>
   )
 }

@@ -1,0 +1,54 @@
+:root {
+    --gh-green: #006B3F;
+    --gh-gold: #FCD116;
+    --gh-red: #CE1126;
+    --gh-dark: #0b1120;
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gh-dark) 0%, #1a2a4a 100%);
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    background: #ffffff;
+    border-radius: 15px;
+    border-top: 5px solid var(--gh-gold);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.auth-header {
+    text-align: center;
+    padding: 30px 20px 10px;
+}
+
+.auth-logo {
+    color: var(--gh-green);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.btn-auth {
+    background-color: var(--gh-green);
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-auth:hover {
+    background-color: var(--gh-gold);
+    color: var(--gh-dark);
+}
+
+.form-control:focus {
+    border-color: var(--gh-green);
+    box-shadow: 0 0 0 0.25rem rgba(0, 107, 63, 0.25);
+}
