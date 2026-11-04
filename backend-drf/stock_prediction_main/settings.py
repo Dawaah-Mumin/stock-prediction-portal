@@ -125,7 +125,7 @@ STATIC_URL = 'static/'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
+    "http://localhost:5173",
 ]
 
 
@@ -149,3 +149,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+#Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR /'media'

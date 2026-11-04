@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +17,9 @@ const Register = () => {
 
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState(false);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -25,13 +28,11 @@ const Register = () => {
             console.log("Registration successful:", response.data);
             setErrors({})
             setSuccessMessage(true)
-            setFormData({
-                username: '',
-                email: '',
-                password: '',
-                confirm_password: ''
-            });
-            setTimeout(() => setSuccessMessage(false), 3000);
+            // Show success message for 2 seconds, then redirect to login
+            setTimeout(() => {
+                setSuccessMessage(false);
+                navigate('/login');
+            }, 2000);
         }catch(error) {
             console.error("Registration error:", error.response?.data);
             setErrors(error.response?.data || {error: "Network error"});
@@ -93,8 +94,8 @@ const Register = () => {
                                     required
                                 />
                                 <small>{errors.confirm_password && <div className="text-danger">{Array.isArray(errors.confirm_password) ? errors.confirm_password.join(', ') : errors.confirm_password}</div>}</small>
-                                {successMessage && <div className="text-success mt-2">Registration successful!</div>}
                             </div>
+                            {successMessage && <div className="alert alert-success text-center mb-3">Registration successful! Redirecting to login...</div>}
                             {loading ? (<button type="submit" className="btn btn-auth w-100 mb-3 shadow-sm" disabled>
                                 <FontAwesomeIcon icon={faSpinner} spin />
                             </button>):(

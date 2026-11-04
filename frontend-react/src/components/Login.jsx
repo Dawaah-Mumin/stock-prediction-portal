@@ -1,9 +1,9 @@
-import { useState, useContext} from 'react';
+import { useState, useContext, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import {AuthContext} from '../AuthProvider';
 
 
@@ -16,7 +16,6 @@ const Login = () => {
     });
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
-    // const [successMessage, setSuccessMessage] = useState(false);
     const navigate = useNavigate();
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
@@ -31,11 +30,6 @@ const Login = () => {
             console.log("Login successful:", response.data)
             setErrors({})
             setIsLoggedIn(true);
-            //setSuccessMessage(true);
-            navigate('/dashboard');
-            setCredentials({ username: '', password: '' });
-
-            //setTimeout(() => setSuccessMessage(false), 3000);
         } catch (error) {
             console.error("Login error:", error.response?.data);
             setErrors(error.response?.data || { error: "Network error" });
@@ -43,6 +37,14 @@ const Login = () => {
             setLoading(false);
         }
     };
+    
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/dashboard');
+        }
+    }, [isLoggedIn, navigate]);
+
+
 
     return (
         <>
@@ -91,6 +93,7 @@ const Login = () => {
                                 <input type="checkbox" className="form-check-input" id="rememberMe" />
                                 <label className="form-check-label small text-muted" htmlFor="rememberMe">Remember this device</label>
                             </div>
+                            {errors.detail && <div className="text-danger mb-3 text-center small">{errors.detail}</div>}
                             {loading ? (
                                 <button type="submit" className="btn btn-auth w-100 mb-3 shadow-sm" disabled>
                                     <FontAwesomeIcon icon={faSpinner} spin />
